@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kuard
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+    - hosts:
+      - "prod-test-kuard.prod.versoview.us"
+      secretName: kuard-test-secret-tls
+  rules:
+  - host: prod-test-kuard.prod.versoview.us
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: kuard
+          servicePort: 80
